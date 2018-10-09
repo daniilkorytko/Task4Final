@@ -1,0 +1,304 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "KeyVautsName": {
+            "value": "MyKeyVauntsTask4"
+        },
+        "location": {
+            "value": "westeurope"
+        },
+        "sku": {
+            "value": "Standard"
+        },
+        "accessPolicies": {
+            "value": [
+                {
+                    "objectId": "a10ce55d-dfb5-4433-a389-152b8614de8d",
+                    "tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d",
+                    "permissions": {
+                        "keys": [
+                            "Get",
+                            "List",
+                            "Update",
+                            "Create",
+                            "Import",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "Decrypt",
+                            "Encrypt",
+                            "UnwrapKey",
+                            "WrapKey",
+                            "Verify",
+                            "Sign",
+                            "Purge"
+                        ],
+                        "secrets": [
+                            "Get",
+                            "List",
+                            "Set",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "Purge"
+                        ],
+                        "certificates": [
+                            "Get",
+                            "List",
+                            "Update",
+                            "Create",
+                            "Import",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "ManageContacts",
+                            "ManageIssuers",
+                            "GetIssuers",
+                            "ListIssuers",
+                            "SetIssuers",
+                            "DeleteIssuers",
+                            "Purge"
+                        ]
+                    }
+                },
+                {
+                    "objectId": "f3d19bd0-a5ee-4ff5-bd53-079f5878beaa",
+                    "tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d",
+                    "permissions": {
+                        "keys": [
+                            "Get",
+                            "List",
+                            "Update",
+                            "Create",
+                            "Import",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "Decrypt",
+                            "Encrypt",
+                            "UnwrapKey",
+                            "WrapKey",
+                            "Verify",
+                            "Sign",
+                            "Purge"
+                        ],
+                        "secrets": [
+                            "Get",
+                            "List",
+                            "Set",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "Purge"
+                        ],
+                        "certificates": [
+                            "Get",
+                            "List",
+                            "Update",
+                            "Create",
+                            "Import",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "ManageContacts",
+                            "ManageIssuers",
+                            "GetIssuers",
+                            "ListIssuers",
+                            "SetIssuers",
+                            "DeleteIssuers",
+                            "Purge"
+                        ]
+                    },
+                    "applicationId": null
+                }
+            ]
+        },
+        "tenant": {
+            "value": "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
+        },
+        "enabledForDeployment": {
+            "value": true
+        },
+        "enabledForTemplateDeployment": {
+            "value": true
+        },
+        "enabledForDiskEncryption": {
+            "value": false
+        },
+        "networkAcls": {
+            "value": {
+                "defaultAction": "Allow",
+                "bypass": "AzureServices",
+                "virtualNetworkRules": [],
+                "ipRules": []
+            }
+        },
+        "secretsObject": {
+            "value": {
+                "secrets": [						
+                    {
+                        "secretName": "Secret1Task4",
+                        "secretValue": "secretValue4"
+                    }
+                ]
+            }
+        },
+
+        "VnetName": {
+            "value": "VNetTask3"
+        },
+        "addressPrefix": {
+            "value": "11.0.0.0/16"
+        },
+        "subnetFrontEnd": {
+            "value": "FrontEnd"
+        },
+        "subnetFrontEndAddressPrefix": {
+            "value": "11.0.1.0/24"
+        },
+        "subnetBackEnd": {
+            "value": "BackEnd"
+        },
+        "subnetBackEndAddressPrefix": {
+            "value": "11.0.2.0/24"
+        },
+        "networkSecurityGroupName": {
+            "value": "MyVmName-nsg"
+        },
+        "networkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "Port_8080",
+                    "properties": {
+                        "priority": 100,
+                        "protocol": "*",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "8080"
+                    }
+                },
+                {
+                    "name": "default-allow-rdp",
+                    "properties": {
+                        "priority": 1000,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "3389"
+                    }
+                },
+                {
+                    "name": "Port_8080Out",
+                    "properties": {
+                        "priority": 100,
+                        "protocol": "*",
+                        "access": "Allow",
+                        "direction": "Outbound",
+                        "sourceApplicationSecurityGroups": [],
+                        "destinationApplicationSecurityGroups": [],
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "8080"
+                    }
+                }
+            ]
+        },
+        "publicIpAddressName": {
+            "value": "MyVmName-ip"
+        },
+        "publicIpAddressType": {
+            "value": "Dynamic"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "networkInterfaceName": {
+            "value": "myvmname324"
+        },
+        "virtualMachineName": {
+            "value": "MyVmTask4"
+        },
+        "virtualMachineRG": {
+            "value": "Daniil1"
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "dataDisks": {
+            "value": [
+                {
+                    "lun": 0,
+                    "createOption": "attach",
+                    "caching": "None",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "MyVmName_DataDisk_0",
+                    "storageAccountType": null
+                }
+            ]
+        },
+        "dataDiskResources": {
+            "value": [
+                {
+                    "name": "MyVmName_DataDisk_0",
+                    "diskSizeGB": 32,
+                    "sku": "StandardSSD_LRS",
+                    "creationData": {
+                        "createOption": "empty"
+                    }
+                }
+            ]
+        },
+        "virtualMachineSize": {
+            "value": "Standard_D2s_v3"
+        },
+        "adminUsername": {
+            "value": "Administrator1"
+        },
+        "diagnosticsStorageAccountName": {
+            "value": "aniil1diag"
+        },
+        "diagnosticsStorageAccountId": {
+            "value": "Microsoft.Storage/storageAccounts/Daniil1diag"
+        },
+        "diagnosticsStorageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "diagnosticsStorageAccountKind": {
+            "value": "Storage"
+        },
+        "availabilitySetName": {
+            "value": "AvailabilitySet1"
+        },
+        "availabilitySetPlatformFaultDomainCount": {
+            "value": 2
+        },
+        "availabilitySetPlatformUpdateDomainCount": {
+            "value": 5
+        },
+        "DSC": {
+            "value": "https://github.com/daniilkorytko/Task3.1/raw/master/DSC.zip"
+        },
+        "DSCfunctions": {
+            "value": "DSC.ps1\\Task"
+}
+    }
+}

@@ -1,0 +1,367 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "KeyVautsName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Standard",
+                "standard",
+                "Premium",
+                "premium"
+            ],
+            "metadata": {
+                "description": "SKU for the vault"
+            }
+        },
+        "accessPolicies": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "The access policies defined for this vault."
+            }
+        },
+        "tenant": {
+            "type": "string"
+        },
+        "enabledForDeployment": {
+            "type": "bool"
+        },
+        "enabledForTemplateDeployment": {
+            "type": "bool"
+        },
+        "enabledForDiskEncryption": {
+            "type": "bool"
+        },
+        "networkAcls": {
+            "type": "object"
+        },
+        "secretsObject": {
+            "type": "secureObject",
+            "defaultValue": "{}"
+        },
+        "VnetName": {
+            "type": "string"
+        },
+        "addressPrefix": {
+            "type": "string"
+        },
+        "subnetFrontEnd": {
+            "type": "string"
+        },
+        "subnetFrontEndAddressPrefix": {
+            "type": "string"
+        },
+        "subnetBackEnd": {
+            "type": "string"
+        },
+        "subnetBackEndAddressPrefix": {
+            "type": "string"
+        },
+        "networkSecurityGroupName": {
+            "type": "string"
+        },
+        "networkSecurityGroupRules": {
+            "type": "array"
+        },
+        "publicIpAddressName": {
+            "type": "string"
+        },
+        "publicIpAddressType": {
+            "type": "string"
+        },
+        "publicIpAddressSku": {
+            "type": "string"
+        },
+        "networkInterfaceName": {
+            "type": "string"
+        },
+        "virtualMachineName": {
+            "type": "string"
+        },
+        "virtualMachineRG": {
+            "type": "string"
+        },
+        "osDiskType": {
+            "type": "string"
+        },
+        "dataDisks": {
+            "type": "array"
+        },
+        "dataDiskResources": {
+            "type": "array"
+        },
+        "virtualMachineSize": {
+            "type": "string"
+        },
+        "adminUsername": {
+            "type": "string"
+        },
+        "diagnosticsStorageAccountName": {
+            "type": "string"
+        },
+        "diagnosticsStorageAccountId": {
+            "type": "string"
+        },
+        "diagnosticsStorageAccountType": {
+            "type": "string"
+        },
+        "diagnosticsStorageAccountKind": {
+            "type": "string"
+        },
+        "availabilitySetName": {
+            "type": "string"
+        },
+        "availabilitySetPlatformFaultDomainCount": {
+            "type": "int"
+        },
+        "availabilitySetPlatformUpdateDomainCount": {
+            "type": "int"
+        },
+        "DSC": {
+            "type": "string"
+        },
+        "DSCfunctions": {
+            "type": "string"
+        }
+    },
+    "variables": {
+
+        "secretName": "[parameters('secretsObject').secrets[0].secretValue]",
+        "vmExtensionName": "dscExtension"
+    },
+
+
+    "resources": [
+        {
+           "apiVersion": "2017-05-10",
+           "name": "linkedTemplateKeyVaunt",
+           "type": "Microsoft.Resources/deployments",
+          
+           
+           "properties": {
+             "mode": "Incremental",
+             "templateLink": {
+                "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/KeyVaunt.json",
+                "contentVersion":"1.0.0.0"
+             },
+             "parameters": {
+                "KeyVautsName":{"value": "[parameters('KeyVautsName')]"},
+                "location":{"value": "[parameters('location')]"},
+                "sku":{"value": "[parameters('sku')]"},
+                "accessPolicies":{"value": "[parameters('accessPolicies')]"},
+                "tenant":{"value": "[parameters('tenant')]"},
+                "enabledForDeployment":{"value": "[parameters('enabledForDeployment')]"},
+                "enabledForTemplateDeployment":{"value": "[parameters('enabledForTemplateDeployment')]"},
+                "enabledForDiskEncryption":{"value": "[parameters('enabledForDiskEncryption')]"},
+                "networkAcls":{"value": "[parameters('networkAcls')]"},
+                "secretsObject":{"value": "[parameters('secretsObject')]"}
+              }
+           }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateVnet2",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+
+                "linkedTemplateKeyVaunt"
+            ],
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/Vnet2.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "VnetName":{"value": "[parameters('VnetName')]"},
+                 "location":{"value": "[parameters('location')]"},
+                 "addressPrefix":{"value": "[parameters('addressPrefix')]"},
+                 "subnetFrontEnd":{"value": "[parameters('subnetFrontEnd')]"},
+                 "subnetFrontEndAddressPrefix":{"value": "[parameters('subnetFrontEndAddressPrefix')]"}
+               }
+            }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateNSG",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/NSG.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                "networkSecurityGroupName":{"value": "[parameters('networkSecurityGroupName')]"},
+                 "location":{"value": "[parameters('location')]"},
+                 "networkSecurityGroupRules":{"value": "[parameters('networkSecurityGroupRules')]"}
+               }
+            }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplatePubIp",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+
+                "linkedTemplateKeyVaunt"
+            ],
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/PublicIpAdressName.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                "publicIpAddressName":{"value": "[parameters('publicIpAddressName')]"},
+                 "location":{"value": "[parameters('location')]"},
+                 "publicIpAddressType":{"value": "[parameters('publicIpAddressType')]"},
+                 "publicIpAddressSku":{"value": "[parameters('publicIpAddressSku')]"}
+               }
+            }
+         },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateNetInterface",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "linkedTemplateNSG",
+                "linkedTemplateVnet2",
+                "linkedTemplateKeyVaunt",
+                "linkedTemplatePubIp"
+
+            ],
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/NetWorkInerface.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                "location":{"value": "[parameters('location')]"},
+                "subnetFrontEnd":{"value": "[parameters('subnetFrontEnd')]"},
+                "networkInterfaceName":{"value": "[parameters('networkInterfaceName')]"},
+                "publicIpAddress": {"value": "[reference('linkedTemplatePubIp').outputs.PubIp.value]"},
+                "nsgId": {"value": "[reference('linkedTemplateNSG').outputs.nsgId.value]"},
+                "vnetId": {"value": "[reference('linkedTemplateVnet2').outputs.vnetId.value]"}
+
+               }
+            }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateDataDisk",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+
+                "linkedTemplateKeyVaunt"
+            ],
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/DataDisk.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                "dataDiskResources":{"value": "[parameters('dataDiskResources')]"},
+                "location":{"value": "[parameters('location')]"}
+               }
+            }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateDataSAccAval",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+
+                "linkedTemplateKeyVaunt"
+            ],
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/SAAval.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                "diagnosticsStorageAccountName":{"value": "[parameters('diagnosticsStorageAccountName')]"},
+                "location":{"value": "[parameters('location')]"},
+                "diagnosticsStorageAccountKind":{"value": "[parameters('diagnosticsStorageAccountKind')]"},
+                "diagnosticsStorageAccountType":{"value": "[parameters('diagnosticsStorageAccountType')]"},
+                "availabilitySetName":{"value": "[parameters('availabilitySetName')]"},
+                "availabilitySetPlatformFaultDomainCount":{"value": "[parameters('availabilitySetPlatformFaultDomainCount')]"},
+                "availabilitySetPlatformUpdateDomainCount":{"value": "[parameters('availabilitySetPlatformUpdateDomainCount')]"}
+               }
+            }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateDeployVM",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "linkedTemplateDataDisk",
+                "linkedTemplateNetInterface",
+                "linkedTemplateDataSAccAval",
+                "linkedTemplateKeyVaunt"
+            ],
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/VMDeploy.json",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                "virtualMachineName":{"value": "[parameters('virtualMachineName')]"},
+                "location":{"value": "[parameters('location')]"},
+                "osDiskType":{"value": "[parameters('osDiskType')]"},
+                "dataDisks":{"value": "[parameters('dataDisks')]"},
+                "networkInterfaceName":{"value": "[parameters('networkInterfaceName')]"},
+                "virtualMachineSize":{"value": "[parameters('virtualMachineSize')]"},
+                "adminUsername":{"value": "[parameters('adminUsername')]"},
+                "diagnosticsStorageAccountName":{"value": "[parameters('diagnosticsStorageAccountName')]"},
+                "availabilitySetName":{"value": "[parameters('availabilitySetName')]"},
+                "secretsObject":{"value": "[parameters('secretsObject')]"},
+                "adminPassword": {
+                    "reference":  {
+                       "keyVault":  {
+                        "id": "[reference('linkedTemplateKeyVaunt').outputs.KeyVaunts.value]"
+                        },
+                        "secretName": "Secret1Task4"
+                    }
+                  }
+               }
+            }
+         },
+         {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineName'),'/', variables('vmExtensionName'))]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "linkedTemplateDeployVM"
+            ],
+            "properties": {
+              "publisher": "Microsoft.Powershell",
+              "type": "DSC",
+              "typeHandlerVersion": "2.19",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                "ModulesUrl": "[parameters('DSC')]",
+                "ConfigurationFunction": "[parameters('DSCfunctions')]",
+                "Properties": {
+                  "MachineName": "[parameters('virtualMachineName')]"
+                }
+              },
+              "protectedSettings": null
+            }
+        }
+
+    ]
+}
