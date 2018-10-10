@@ -274,7 +274,7 @@
             "value": "Administrator1"
         },
         "diagnosticsStorageAccountName": {
-            "value": "Daniil1SA"
+            "value": "aniil1diag"
         },
         "diagnosticsStorageAccountId": {
             "value": "Microsoft.Storage/storageAccounts/Daniil1diag"
