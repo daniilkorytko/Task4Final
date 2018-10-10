@@ -135,7 +135,9 @@
     "variables": {
 
         "secretName": "[parameters('secretsObject').secrets[0].secretValue]",
-        "vmExtensionName": "dscExtension"
+        "vmExtensionName": "dscExtension",
+        "vmExtensionName1": "dscExtension1"
+       
     },
 
 
