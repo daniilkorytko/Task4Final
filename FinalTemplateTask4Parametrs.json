@@ -274,7 +274,7 @@
             "value": "Administrator1"
         },
         "diagnosticsStorageAccountName": {
-            "value": "aniil1diag"
+            "value": "Daniil1StorageAccount"
         },
         "diagnosticsStorageAccountId": {
             "value": "Microsoft.Storage/storageAccounts/Daniil1diag"
@@ -295,10 +295,10 @@
             "value": 5
         },
         "DSC": {
-            "value": "https://github.com/daniilkorytko/Task3.1/raw/master/DSC.zip"
+            "value": "https://aniil1diag.blob.core.windows.net/windows-powershell-dsc/FinalDSC.ps1.zip?sp=r&st=2018-10-10T16:38:37Z&se=2018-10-11T00:38:37Z&spr=https&sv=2017-11-09&sig=%2FjH9MNh7i7dhfIIK8mJq2hlE2aPJ44ZHbag8PRqlC5s%3D&sr=b"
         },
         "DSCfunctions": {
-            "value": "DSC.ps1\\Task"
+            "value": "FinalDSC.ps1\\IISFireWall"
 }
     }
 }
