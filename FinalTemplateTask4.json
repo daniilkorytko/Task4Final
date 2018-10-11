@@ -125,12 +125,13 @@
         "availabilitySetPlatformUpdateDomainCount": {
             "type": "int"
         },
-        "DSC": {
-            "type": "string"
-        },
         "DSCfunctions": {
             "type": "string"
+        },
+        "DSC": {
+            "type": "string"
         }
+
     },
     "variables": {
 
