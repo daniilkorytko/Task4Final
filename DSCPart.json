@@ -21,9 +21,6 @@
             "name": "[concat(parameters('virtualMachineName'),'/', parameters('vmExtensionName'))]",
             "apiVersion": "2015-05-01-preview",
             "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "linkedTemplateDeployVM"
-            ],
             "properties": {
               "publisher": "Microsoft.Powershell",
               "type": "DSC",
