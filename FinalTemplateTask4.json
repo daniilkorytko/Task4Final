@@ -330,8 +330,7 @@
                 "linkedTemplateKeyVaunt",
                 "linkedTemplateDataDisk",
                 "linkedTemplateNetInterface",
-                "linkedTemplateDataSAccAval",
-                "[resourceId( 'Microsoft.KeyVault/vaults', parameters('KeyVautsName'))]"
+                "linkedTemplateDataSAccAval"
                
             ],
             
