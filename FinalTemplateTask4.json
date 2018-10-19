@@ -356,7 +356,7 @@
                 "adminPassword": {
                     "reference":  {
 
-                       "keyVault":  {"id": "/subscriptions/5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa/resourceGroups/Task10/providers/Microsoft.KeyVault/vaults/MyKeyVauntsTask4"},
+                       "keyVault":  {"id": "[reference('linkedTemplateKeyVaunt').outputs.KeyVaunts.value]"},
                        "secretName": "[variables('secretName')]"
                        
                     }
