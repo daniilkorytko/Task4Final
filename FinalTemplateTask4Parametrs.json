@@ -5,12 +5,6 @@
         "KeyVautsName": {
             "value": "MyKeyVauntsTask4"
         },
-        "location": {
-            "value": "westeurope"
-        },
-        "sku": {
-            "value": "Standard"
-        },
         "accessPolicies": {
             "value": [
                 {
@@ -18,50 +12,13 @@
                     "tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d",
                     "permissions": {
                         "keys": [
-                            "Get",
-                            "List",
-                            "Update",
-                            "Create",
-                            "Import",
-                            "Delete",
-                            "Recover",
-                            "Backup",
-                            "Restore",
-                            "Decrypt",
-                            "Encrypt",
-                            "UnwrapKey",
-                            "WrapKey",
-                            "Verify",
-                            "Sign",
-                            "Purge"
+                            "All"
                         ],
                         "secrets": [
-                            "Get",
-                            "List",
-                            "Set",
-                            "Delete",
-                            "Recover",
-                            "Backup",
-                            "Restore",
-                            "Purge"
+                            "All"
                         ],
                         "certificates": [
-                            "Get",
-                            "List",
-                            "Update",
-                            "Create",
-                            "Import",
-                            "Delete",
-                            "Recover",
-                            "Backup",
-                            "Restore",
-                            "ManageContacts",
-                            "ManageIssuers",
-                            "GetIssuers",
-                            "ListIssuers",
-                            "SetIssuers",
-                            "DeleteIssuers",
-                            "Purge"
+                            "All"
                         ]
                     }
                 },
@@ -70,50 +27,13 @@
                     "tenantId": "b41b72d0-4e9f-4c26-8a69-f949f367c91d",
                     "permissions": {
                         "keys": [
-                            "Get",
-                            "List",
-                            "Update",
-                            "Create",
-                            "Import",
-                            "Delete",
-                            "Recover",
-                            "Backup",
-                            "Restore",
-                            "Decrypt",
-                            "Encrypt",
-                            "UnwrapKey",
-                            "WrapKey",
-                            "Verify",
-                            "Sign",
-                            "Purge"
+                            "All"
                         ],
                         "secrets": [
-                            "Get",
-                            "List",
-                            "Set",
-                            "Delete",
-                            "Recover",
-                            "Backup",
-                            "Restore",
-                            "Purge"
+                            "All"
                         ],
                         "certificates": [
-                            "Get",
-                            "List",
-                            "Update",
-                            "Create",
-                            "Import",
-                            "Delete",
-                            "Recover",
-                            "Backup",
-                            "Restore",
-                            "ManageContacts",
-                            "ManageIssuers",
-                            "GetIssuers",
-                            "ListIssuers",
-                            "SetIssuers",
-                            "DeleteIssuers",
-                            "Purge"
+                            "All"
                         ]
                     },
                     "applicationId": null
@@ -122,15 +42,6 @@
         },
         "tenant": {
             "value": "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
-        },
-        "enabledForDeployment": {
-            "value": true
-        },
-        "enabledForTemplateDeployment": {
-            "value": true
-        },
-        "enabledForDiskEncryption": {
-            "value": false
         },
         "networkAcls": {
             "value": {
@@ -145,7 +56,7 @@
                 "secrets": [						
                     {
                         "secretName": "Secret1Task4",
-                        "secretValue": "secretValue4"
+                        "secretValue": ""
                     }
                 ]
             }
@@ -153,21 +64,6 @@
 
         "VnetName": {
             "value": "VNetTask3"
-        },
-        "addressPrefix": {
-            "value": "11.0.0.0/16"
-        },
-        "subnetFrontEnd": {
-            "value": "FrontEnd"
-        },
-        "subnetFrontEndAddressPrefix": {
-            "value": "11.0.1.0/24"
-        },
-        "subnetBackEnd": {
-            "value": "BackEnd"
-        },
-        "subnetBackEndAddressPrefix": {
-            "value": "11.0.2.0/24"
         },
         "networkSecurityGroupName": {
             "value": "MyVmName-nsg"
@@ -224,23 +120,11 @@
         "publicIpAddressName": {
             "value": "MyVmName-ip"
         },
-        "publicIpAddressType": {
-            "value": "Dynamic"
-        },
-        "publicIpAddressSku": {
-            "value": "Basic"
-        },
         "networkInterfaceName": {
             "value": "myvmname324"
         },
         "virtualMachineName": {
             "value": "MyVmTask4"
-        },
-        "virtualMachineRG": {
-            "value": "Daniil1"
-        },
-        "osDiskType": {
-            "value": "Premium_LRS"
         },
         "dataDisks": {
             "value": [
@@ -274,25 +158,10 @@
             "value": "Administrator1"
         },
         "diagnosticsStorageAccountName": {
-            "value": "mystorageaccounttask4"
-        },
-        "diagnosticsStorageAccountId": {
-            "value": "Microsoft.Storage/storageAccounts/Daniil1diag"
-        },
-        "diagnosticsStorageAccountType": {
-            "value": "Standard_LRS"
-        },
-        "diagnosticsStorageAccountKind": {
-            "value": "Storage"
+            "value": "daniil1storageaccount"
         },
         "availabilitySetName": {
             "value": "AvailabilitySet1"
-        },
-        "availabilitySetPlatformFaultDomainCount": {
-            "value": 2
-        },
-        "availabilitySetPlatformUpdateDomainCount": {
-            "value": 5
         },
         "DSCfunctions": {
             "value": "FinalDSC.ps1\\IISFireWall"

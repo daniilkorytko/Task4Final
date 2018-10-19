@@ -5,9 +5,6 @@
         "KeyVautsName": {
             "type": "string"
         },
-        "location": {
-            "type": "string"
-        },
         "sku": {
             "type": "string",
             "defaultValue": "Standard",
@@ -32,13 +29,16 @@
             "type": "string"
         },
         "enabledForDeployment": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": true
         },
         "enabledForTemplateDeployment": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": true
         },
         "enabledForDiskEncryption": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": false
         },
         "networkAcls": {
             "type": "object"
@@ -51,19 +51,16 @@
             "type": "string"
         },
         "addressPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
         },
         "subnetFrontEnd": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "FrontEnd"
         },
         "subnetFrontEndAddressPrefix": {
-            "type": "string"
-        },
-        "subnetBackEnd": {
-            "type": "string"
-        },
-        "subnetBackEndAddressPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "10.0.1.0/24"
         },
         "networkSecurityGroupName": {
             "type": "string"
@@ -75,10 +72,12 @@
             "type": "string"
         },
         "publicIpAddressType": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Dynamic"
         },
         "publicIpAddressSku": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Basic"
         },
         "networkInterfaceName": {
             "type": "string"
@@ -86,11 +85,9 @@
         "virtualMachineName": {
             "type": "string"
         },
-        "virtualMachineRG": {
-            "type": "string"
-        },
         "osDiskType": {
-            "type": "string"
+            "type": "string",
+            "defaultValue":  "Premium_LRS"
         },
         "dataDisks": {
             "type": "array"
@@ -99,7 +96,8 @@
             "type": "array"
         },
         "virtualMachineSize": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3"
         },
         "adminUsername": {
             "type": "string"
@@ -107,38 +105,56 @@
         "diagnosticsStorageAccountName": {
             "type": "string"
         },
-        "diagnosticsStorageAccountId": {
-            "type": "string"
-        },
         "diagnosticsStorageAccountType": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_LRS"
         },
         "diagnosticsStorageAccountKind": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Storage"
         },
         "availabilitySetName": {
             "type": "string"
         },
         "availabilitySetPlatformFaultDomainCount": {
-            "type": "int"
+            "type": "int",
+            "defaultValue": 2
         },
         "availabilitySetPlatformUpdateDomainCount": {
-            "type": "int"
+            "type": "int",
+            "defaultValue": 5
+        },
+        "DSC": {
+            "type": "securestring"
         },
         "DSCfunctions": {
             "type": "string"
         },
-        "DSC": {
-            "type": "string"
+        "AdminPassword": {
+            "type": "securestring"
         }
 
     },
     "variables": {
-
-        "secretName": "[parameters('secretsObject').secrets[0].secretValue]",
+        "location": "[resourceGroup().location]",
+        "secretName": "[parameters('secretsObject').secrets[0].secretName]",
         "vmExtensionName": "dscExtension",
-        "vmExtensionName1": "dscExtension1"
-       
+
+        "secretsObject1": {
+
+                "secrets": [						
+                    {
+                        "secretName": "[parameters('secretsObject').secrets[0].secretName]",
+                        "secretValue": "[parameters('AdminPassword')]"
+                    }
+                ]
+            
+        },
+        "vaultSubscription": "[subscription().subscriptionId]",
+        "vaultResourceGroupName": "[resourceGroup().name]"
+        
+        
+
     },
 
 
@@ -157,7 +173,7 @@
              },
              "parameters": {
                 "KeyVautsName":{"value": "[parameters('KeyVautsName')]"},
-                "location":{"value": "[parameters('location')]"},
+                "location":{"value": "[variables('location')]"},
                 "sku":{"value": "[parameters('sku')]"},
                 "accessPolicies":{"value": "[parameters('accessPolicies')]"},
                 "tenant":{"value": "[parameters('tenant')]"},
@@ -165,7 +181,7 @@
                 "enabledForTemplateDeployment":{"value": "[parameters('enabledForTemplateDeployment')]"},
                 "enabledForDiskEncryption":{"value": "[parameters('enabledForDiskEncryption')]"},
                 "networkAcls":{"value": "[parameters('networkAcls')]"},
-                "secretsObject":{"value": "[parameters('secretsObject')]"}
+                "secretsObject":{"value": "[variables('secretsObject1')]"}
               }
            }
         },
@@ -185,7 +201,7 @@
               },
               "parameters": {
                  "VnetName":{"value": "[parameters('VnetName')]"},
-                 "location":{"value": "[parameters('location')]"},
+                 "location":{"value": "[variables('location')]"},
                  "addressPrefix":{"value": "[parameters('addressPrefix')]"},
                  "subnetFrontEnd":{"value": "[parameters('subnetFrontEnd')]"},
                  "subnetFrontEndAddressPrefix":{"value": "[parameters('subnetFrontEndAddressPrefix')]"}
@@ -204,7 +220,7 @@
               },
               "parameters": {
                 "networkSecurityGroupName":{"value": "[parameters('networkSecurityGroupName')]"},
-                 "location":{"value": "[parameters('location')]"},
+                 "location":{"value": "[variables('location')]"},
                  "networkSecurityGroupRules":{"value": "[parameters('networkSecurityGroupRules')]"}
                }
             }
@@ -225,7 +241,7 @@
               },
               "parameters": {
                 "publicIpAddressName":{"value": "[parameters('publicIpAddressName')]"},
-                 "location":{"value": "[parameters('location')]"},
+                 "location":{"value": "[variables('location')]"},
                  "publicIpAddressType":{"value": "[parameters('publicIpAddressType')]"},
                  "publicIpAddressSku":{"value": "[parameters('publicIpAddressSku')]"}
                }
@@ -249,7 +265,7 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                "location":{"value": "[parameters('location')]"},
+                "location":{"value": "[variables('location')]"},
                 "subnetFrontEnd":{"value": "[parameters('subnetFrontEnd')]"},
                 "networkInterfaceName":{"value": "[parameters('networkInterfaceName')]"},
                 "publicIpAddress": {"value": "[reference('linkedTemplatePubIp').outputs.PubIp.value]"},
@@ -275,7 +291,7 @@
               },
               "parameters": {
                 "dataDiskResources":{"value": "[parameters('dataDiskResources')]"},
-                "location":{"value": "[parameters('location')]"}
+                "location":{"value": "[variables('location')]"}
                }
             }
          },
@@ -295,7 +311,7 @@
               },
               "parameters": {
                 "diagnosticsStorageAccountName":{"value": "[parameters('diagnosticsStorageAccountName')]"},
-                "location":{"value": "[parameters('location')]"},
+                "location":{"value": "[variables('location')]"},
                 "diagnosticsStorageAccountKind":{"value": "[parameters('diagnosticsStorageAccountKind')]"},
                 "diagnosticsStorageAccountType":{"value": "[parameters('diagnosticsStorageAccountType')]"},
                 "availabilitySetName":{"value": "[parameters('availabilitySetName')]"},
@@ -305,24 +321,31 @@
             }
          },
          {
+          
             "apiVersion": "2017-05-10",
-            "name": "linkedTemplateDeployVM",
+            "name": "linkedTemplateDeployVM1",
             "type": "Microsoft.Resources/deployments",
+
             "dependsOn": [
+                "linkedTemplateKeyVaunt",
                 "linkedTemplateDataDisk",
                 "linkedTemplateNetInterface",
                 "linkedTemplateDataSAccAval",
-                "linkedTemplateKeyVaunt"
+                "[resourceId( 'Microsoft.KeyVault/vaults', parameters('KeyVautsName'))]"
+               
             ],
+            
             "properties": {
               "mode": "Incremental",
               "templateLink": {
                  "uri":"https://raw.githubusercontent.com/daniilkorytko/Task3.1/master/VMDeploy.json",
                  "contentVersion":"1.0.0.0"
               },
+
               "parameters": {
+
                 "virtualMachineName":{"value": "[parameters('virtualMachineName')]"},
-                "location":{"value": "[parameters('location')]"},
+                "location":{"value": "[variables('location')]"},
                 "osDiskType":{"value": "[parameters('osDiskType')]"},
                 "dataDisks":{"value": "[parameters('dataDisks')]"},
                 "networkInterfaceName":{"value": "[parameters('networkInterfaceName')]"},
@@ -330,41 +353,38 @@
                 "adminUsername":{"value": "[parameters('adminUsername')]"},
                 "diagnosticsStorageAccountName":{"value": "[parameters('diagnosticsStorageAccountName')]"},
                 "availabilitySetName":{"value": "[parameters('availabilitySetName')]"},
-                "secretsObject":{"value": "[parameters('secretsObject')]"},
+                "secretsObject":{"value": "[variables('secretsObject1')]"},
                 "adminPassword": {
                     "reference":  {
-                       "keyVault":  {
-                        "id": "[reference('linkedTemplateKeyVaunt').outputs.KeyVaunts.value]"
-                        },
-                        "secretName": "Secret1Task4"
+
+                       "keyVault":  {"id": "/subscriptions/5c2e7fc5-f38e-4743-b71d-26cff5b1b4fa/resourceGroups/Task10/providers/Microsoft.KeyVault/vaults/MyKeyVauntsTask4"},
+                       "secretName": "[variables('secretName')]"
+                       
                     }
                   }
                }
             }
          },
          {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('virtualMachineName'),'/', variables('vmExtensionName'))]",
-            "apiVersion": "2015-05-01-preview",
-            "location": "[parameters('location')]",
+            "apiVersion": "2017-05-10",
+            "name": "linkedTemplateDSC",
+            "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "linkedTemplateDeployVM"
+                "linkedTemplateDeployVM1"
             ],
             "properties": {
-              "publisher": "Microsoft.Powershell",
-              "type": "DSC",
-              "typeHandlerVersion": "2.19",
-              "autoUpgradeMinorVersion": true,
-              "settings": {
-                "ModulesUrl": "[parameters('DSC')]",
-                "ConfigurationFunction": "[parameters('DSCfunctions')]",
-                "Properties": {
-                  "MachineName": "[parameters('virtualMachineName')]"
-                }
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"https://raw.githubusercontent.com/daniilkorytko/Task4Final/master/DSCPart.json",
+                 "contentVersion":"1.0.0.0"
               },
-              "protectedSettings": null
+              "parameters": {
+                "virtualMachineName":{"value": "[parameters('virtualMachineName')]"},
+                "vmExtensionName":{"value": "[variables('vmExtensionName')]"},
+                "DSC":{"value": "[parameters('DSC')]"},
+                "DSCfunctions":{"value": "[parameters('DSCfunctions')]"}
+               }
             }
-        }
-
+         }
     ]
 }
